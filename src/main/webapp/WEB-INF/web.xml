@@ -6,11 +6,5 @@
 	version="3.0">
 
     <display-name>Tree data</display-name>
-
-    <listener>
-  	<listener-class>
-  		com.eden33.servlet.ContextListener
-  	</listener-class>
-    </listener>
-  
+    
 </web-app>

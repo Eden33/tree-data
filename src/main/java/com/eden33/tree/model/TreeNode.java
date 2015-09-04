@@ -1,4 +1,4 @@
-package com.eden33.tree.entity;
+package com.eden33.tree.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -21,7 +21,7 @@ import javax.persistence.Table;
 })
 @Entity
 @Table(name="t_hierarchy", indexes = {@Index(columnList = "id, parent")})
-public class NodeDAO {
+public class TreeNode {
     
     @Id
     @GeneratedValue(strategy=GenerationType.AUTO)
