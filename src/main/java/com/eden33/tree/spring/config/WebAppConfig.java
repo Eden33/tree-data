@@ -1,8 +1,8 @@
-package com.eden33.tree.config;
+package com.eden33.tree.spring.config;
 
-import com.eden33.tree.dao.TreeNodeDAO;
-import com.eden33.tree.dao.TreeNodeDAOImpl;
-import com.eden33.tree.model.TreeNode;
+import com.eden33.tree.spring.dao.TreeNodeDAO;
+import com.eden33.tree.spring.dao.TreeNodeDAOImpl;
+import com.eden33.tree.spring.model.TreeNode;
 import java.util.Properties;
 import javax.sql.DataSource;
 import org.apache.commons.dbcp2.BasicDataSource;
@@ -25,7 +25,7 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @author edi
  */
 @Configuration
-@ComponentScan("com.eden33.tree")
+@ComponentScan("com.eden33.tree.spring.service")
 @EnableTransactionManagement
 public class WebAppConfig {
         
