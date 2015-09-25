@@ -1,5 +1,6 @@
 package com.eden33.tree.spring.model;
 
+import com.eden33.tree.spring.dao.TreeNodeDAO;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Column;
@@ -23,7 +24,15 @@ import javax.persistence.Transient;
     ),
     @NamedNativeQuery(
         name = "selectTreeNodes", 
-        query = "SELECT hi.id, parent FROM (SELECT hierarchy_connect_by_parent_eq_prior_id(id) AS id, @level AS level FROM (SELECT  @start_with \\:= ?, @id \\:= @start_with, @level \\:= 0) vars, t_hierarchy WHERE @id IS NOT NULL) ho JOIN t_hierarchy hi ON hi.id = ho.id",
+        query =   "SELECT hi.id, parent, ho.level "
+                + "FROM "
+                + "("
+                + "     SELECT hierarchy_connect_by_parent_eq_prior_id(id) AS id, @level AS level "
+                + "     FROM "
+                + "     ("
+                + "         SELECT  @start_with \\:= ?, @id \\:= @start_with, @level \\:= 0"
+                + "     ) "
+                + "vars, t_hierarchy WHERE @id IS NOT NULL) ho JOIN t_hierarchy hi ON hi.id = ho.id",
         resultClass = TreeNode.class 
     )
 })
@@ -46,6 +55,8 @@ public class TreeNode {
     @Column(columnDefinition = "INT unsigned", nullable = false)
     private int parent;
     
+    private int level;
+    
     @Transient
     private List<TreeNode> children = new ArrayList<>();
 
@@ -66,8 +77,13 @@ public class TreeNode {
     }
 
     /**
-     * If this node is no leafe the list has at least one element.
-     * Otherwise the list has length zero.
+     * Use {@link TreeBuilder#registerTreeNodes(java.util.List)} 
+     * after you have queried a list of nodes. E.g. with {@link TreeNodeDAO#getTreeNodes(int)}
+     * After execution of {@link TreeBuilder#registerTreeNodes(java.util.List)}
+     * you can build up the tree node child structure with {@link TreeBuilder#build()}
+     * 
+     * If this TreeNode is a leafe children length will be zero.
+     * 
      * @return The list of direct children.
      */
     public List<TreeNode> getChildren() {
@@ -77,6 +93,18 @@ public class TreeNode {
     public void setChildren(List<TreeNode> children) {
         this.children = children;
     }
-    
-    
+
+     /**
+     * Level 1 means root node.
+     * Level 2 means direct child of root node, and so on.
+     * 
+     * @return The level
+     */
+    public int getLevel() {
+        return level;
+    }
+
+    public void setLevel(int level) {
+        this.level = level;
+    }
 }

@@ -43,7 +43,7 @@ public class WebAppInitializer implements WebApplicationInitializer {
         }
         
         //generate fresh tree data on each startup
-        treeNodeDAO.generateTreeData(3, 4);
+        treeNodeDAO.generateTreeData(1, 2);
                 
         logger.debug("onStartup ------------------------------ END");
     }
