@@ -1,4 +1,6 @@
-faces-config.NavData
-nb-configuration.xml
-nbactions.xml
 /target/
+/bin/
+/.settings
+.classpath
+.project
+/WebContent/
